@@ -12,6 +12,7 @@
     ],
     "plugins": [
         "transform-class-properties",
-        "syntax-dynamic-import"
+        "syntax-dynamic-import",
+        "transform-decorators-legacy"
     ]
 }

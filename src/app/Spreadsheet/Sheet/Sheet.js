@@ -2,15 +2,18 @@ import React, { Component } from "react";
 import { HotTable } from '@handsontable/react';
 import "handsontable/dist/handsontable.full.css";
 import "./Sheet.scss";
+import autobind from "autobind-decorator";
 import { updateSheet } from "../../../modules/googleSheetsApi.js";
+import { encrypt, decrypt } from "../../../modules/crypto.js";
+import { subscribe, unsubscribe } from "pubsub-js";
 
 export default class Spreadsheet extends Component {
 
-    constructor () {
-        super();
-        this.onAfterChange = this.onAfterChange.bind(this);
-    }
+    state = {
+        dummy: 0
+    };
 
+    @autobind
     async onAfterChange (changes, trigger) {
         if (trigger === "loadData") {
             return;
@@ -20,9 +23,19 @@ export default class Spreadsheet extends Component {
             return {
                 row: y,
                 col: x,
-                value: next
+                value: encrypt(next, [y, x])
             };
         }));
+    }
+
+    componentDidMount () {
+        this.subscription = subscribe("uiEvents.changeCipherKey", () => this.setState({
+            dummy: this.state.dummy + 1
+        }));
+    }
+
+    componentWillUnmount () {
+        unsubscribe(this.subscription);
     }
 
     render () {
@@ -30,10 +43,12 @@ export default class Spreadsheet extends Component {
         const rowData = this.props.sheet.data[0].rowData;
         const data = rowData.concat(
             Array.from({ length: rowCount - rowData.length }, () => ({}))
-        ).map(row => !row.values
+        ).map((row, rowIndex) => !row.values
             ? Array.from({ length: columnCount }, () => "")
-            : row.values.concat(Array.from({ length: columnCount - row.values.length }, () => ({}))).map(row => {
-                return row.formattedValue || "";
+            : row.values.concat(
+                Array.from({ length: columnCount - row.values.length }, () => ({}))
+            ).map((cell, colIndex) => {
+                return decrypt(cell.formattedValue || "", [rowIndex, colIndex]);
             })
         );
         return <HotTable contextMenu={ true }

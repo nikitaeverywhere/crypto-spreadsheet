@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import "./SpreadsheetRow.scss";
+import autobind from "autobind-decorator";
 import { publish } from "pubsub-js";
 
 export default class SpreadsheetSelect extends Component {
 
-    constructor () {
-        super();
-        this.onClick = this.onClick.bind(this);
-    }
-
+    @autobind
     onClick () {
         const { name, id } = this.props;
         publish("uiEvents.openSpreadsheet", { name, id });

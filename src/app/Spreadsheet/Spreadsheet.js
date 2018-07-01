@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "./Spreadsheet.scss";
 import { getSheet } from "../../modules/googleSheetsApi.js";
 import Sheet from "./Sheet/Sheet.js";
-import Icon from "../Icon.js";
+import Icon from "../Components/Icon.js";
+import EncryptionControl from "../Components/EncryptionControl.js";
 
 export default class Spreadsheet extends Component {
 
@@ -26,6 +27,7 @@ export default class Spreadsheet extends Component {
             <div class="header">
                 <Icon size="big" image="lock"/>
                 { this.props.name }
+                <EncryptionControl/>
             </div>
             <div class="body">{ !this.state.spreadsheet ? null :
                 <Sheet sheet={ this.state.spreadsheet.sheets[this.state.selectedSheet] }
