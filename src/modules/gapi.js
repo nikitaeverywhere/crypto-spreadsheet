@@ -1,6 +1,5 @@
 import delay from "./delay.js";
 import { gapiConfig } from "../config.js";
-import { showMessage } from "./notification.js";
 
 let signedIn = false;
 let signingIn = false;
@@ -45,7 +44,8 @@ async function requestSignIn () {
         const response = await gapi.auth2.getAuthInstance().signIn();
         gapiToken = response.getAuthResponse();
     } catch (e) {
-        showMessage(e);
+        await delay(5000);
+        console.error(e);
     }
     localStorage.setItem("gapiToken", JSON.stringify(gapiToken));
     signingIn = false;
