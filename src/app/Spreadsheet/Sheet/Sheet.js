@@ -40,7 +40,7 @@ export default class Spreadsheet extends Component {
 
     render () {
         const { rowCount, columnCount } = this.props.sheet.properties.gridProperties;
-        const rowData = this.props.sheet.data[0].rowData;
+        const rowData = this.props.sheet.data[0].rowData || [];
         const data = rowData.concat(
             Array.from({ length: rowCount - rowData.length }, () => ({}))
         ).map((row, rowIndex) => !row.values
