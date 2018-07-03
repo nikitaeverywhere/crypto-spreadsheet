@@ -29,7 +29,8 @@
     "handsontable": "^4.0.0",
     "pubsub-js": "^1.6.0",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "throttle-debounce": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

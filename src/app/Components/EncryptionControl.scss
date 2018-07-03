@@ -1,4 +1,13 @@
 .encryption-control {
+    
     display: inline-block;
     margin-left: 0.3rem;
+    border-radius: .3rem;
+
+    input {
+        border: 1px solid #f3f3f3;
+        padding: .3rem;
+        width: 200px;
+    }
+
 }

@@ -2,10 +2,18 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
+    color: #444;
+    font-size: 14pt;
 }
 
-.react-app {
+#react-app {
 
     height: 100%;
+    background-position: 0;
+    background-repeat: no-repeat;
 
+}
+
+a {
+    color: black;
 }
