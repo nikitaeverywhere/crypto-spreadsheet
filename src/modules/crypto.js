@@ -20,6 +20,9 @@ let key = "";
 subscribe("uiEvents.changeCipherKey", (_, newKey) => key = newKey);
 
 export function encrypt (text, salt) {
+    if (key === "") {
+        return text;
+    }
     return ciphers[cipher].encrypt(salt.join("/") + "/" + text, key);
 }
 
