@@ -5,7 +5,7 @@ import "./Sheet.scss";
 import autobind from "autobind-decorator";
 import { updateSheet } from "../../../modules/googleSheetsApi.js";
 import { encrypt, decrypt } from "../../../modules/crypto.js";
-import { subscribe, unsubscribe } from "pubsub-js";
+import { subscribe, unsubscribe, publish } from "pubsub-js";
 
 export default class Spreadsheet extends Component {
 
@@ -19,13 +19,17 @@ export default class Spreadsheet extends Component {
             return;
         }
         const sheetTitle = this.props.sheet.properties.title;
-        await updateSheet(this.props.spreadsheetId, sheetTitle, changes.map(([y, x, prev, next]) => {
+        await updateSheet(this.props.spreadsheetId, sheetTitle, changes.map(([y, x, _, next]) => {
             return {
                 row: y,
                 col: x,
-                value: encrypt(next, [y, x])
+                value: encrypt(next, this.getEncryptionSalt(y, x))
             };
         }));
+    }
+
+    getEncryptionSalt (row, col) {
+        return [this.props.spreadsheetId, this.props.sheet.properties.sheetId, row, col];
     }
 
     componentDidMount () {
@@ -36,6 +40,7 @@ export default class Spreadsheet extends Component {
 
     componentWillUnmount () {
         unsubscribe(this.subscription);
+        publish("uiEvents.changeCipherKey", "");
     }
 
     render () {
@@ -48,7 +53,7 @@ export default class Spreadsheet extends Component {
             : row.values.concat(
                 Array.from({ length: columnCount - row.values.length }, () => ({}))
             ).map((cell, colIndex) => {
-                return decrypt(cell.formattedValue || "", [rowIndex, colIndex]);
+                return decrypt(cell.formattedValue || "", this.getEncryptionSalt(rowIndex, colIndex));
             })
         );
         return <HotTable contextMenu={ true }

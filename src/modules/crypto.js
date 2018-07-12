@@ -1,5 +1,6 @@
 import AES from "crypto-js/aes";
 import { enc } from "crypto-js";
+import sha3 from "crypto-js/sha3";
 import { subscribe } from "pubsub-js";
 
 const ciphers = {
@@ -19,14 +20,22 @@ let key = "";
 
 subscribe("uiEvents.changeCipherKey", (_, newKey) => key = newKey);
 
-export function encrypt (text, salt) {
+function hash (string) {
+    return sha3(string, {
+        outputLength: 128
+    }).toString();
+}
+
+export function encrypt (text, salt = []) {
     if (key === "") {
         return text;
     }
-    return ciphers[cipher].encrypt(salt.join("/") + "/" + text, key);
+    return key === ""
+        ? text
+        : ciphers[cipher].encrypt(hash(salt.join(",")) + text, key);
 }
 
-export function decrypt (text, salt) {
+export function decrypt (text, salt = []) {
     let decrypted;
     if (key === "") {
         return text;
@@ -34,9 +43,9 @@ export function decrypt (text, salt) {
     try {
         decrypted = ciphers[cipher].decrypt(text, key);
     } catch (e) {
-        return "???";
+        return "Wrong password!";
     }
     return text && !decrypted
-        ? "???"
-        : decrypted.replace(salt.join("/") + "/", "");
+        ? "Wrong password!"
+        : decrypted.replace(hash(salt.join(",")), "");
 }

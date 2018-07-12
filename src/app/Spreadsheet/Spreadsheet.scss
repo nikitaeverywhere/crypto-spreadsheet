@@ -33,6 +33,7 @@ $footerHeight: 1.5rem;
         height: $footerHeight;
 
         .tab {
+            cursor: pointer;
             padding: .1rem .3rem;
             margin: 0 .1rem;
             background-color: #f3f3f3;

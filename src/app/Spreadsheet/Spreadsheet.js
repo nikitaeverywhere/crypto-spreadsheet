@@ -26,7 +26,6 @@ export default class Spreadsheet extends Component {
 
     @autobind
     onBackClick () {
-        console.log(1);
         publish("uiEvents.closeSpreadsheet");
     }
 
