@@ -29,6 +29,13 @@ export default class Spreadsheet extends Component {
         publish("uiEvents.closeSpreadsheet");
     }
 
+    @autobind
+    async onTabClick (tabIndex) {
+        this.setState({
+            selectedSheet: tabIndex
+        });
+    }
+
     render () {
         return <div class="spreadsheet">
             <div class="header">
@@ -41,9 +48,10 @@ export default class Spreadsheet extends Component {
                 <Sheet sheet={ this.state.spreadsheet.sheets[this.state.selectedSheet] }
                        spreadsheetId={ this.props.id }/>
             }</div>
-            <div class="footer">{ !this.state.spreadsheet ? null : this.state.spreadsheet.sheets.map(sheet =>
-                <div class="tab"
-                     key={ sheet.properties.sheetId }>
+            <div class="footer">{ !this.state.spreadsheet ? null : this.state.spreadsheet.sheets.map((sheet, i) =>
+                <div class={ `tab${ i === this.state.selectedSheet ? " selected" : "" }` }
+                     key={ sheet.properties.sheetId }
+                     onClick={ () => this.onTabClick(i) }>
                     { sheet.properties.title }
                 </div>
             )}</div>

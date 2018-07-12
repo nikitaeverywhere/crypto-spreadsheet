@@ -33,6 +33,7 @@ $footerHeight: 1.5rem;
         height: $footerHeight;
 
         .tab {
+
             cursor: pointer;
             padding: .1rem .3rem;
             margin: 0 .1rem;
@@ -41,6 +42,12 @@ $footerHeight: 1.5rem;
             border-radius: 0 0 .5rem .5rem;
             border: 1px solid gray;
             border-top: none;
+
+            &.selected {
+                background: white;
+                font-weight: bold;
+            }
+
         }
 
     }
