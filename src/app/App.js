@@ -11,13 +11,18 @@ export default class App extends Component {
     };
 
     componentDidMount () {
-        this.subscription = subscribe("uiEvents.openSpreadsheet", (_, { id, name }) => this.setState({
-            spreadsheet: { id, name }
-        }));
+        this.subscriptions = [
+            subscribe("uiEvents.openSpreadsheet", (_, { id, name }) => this.setState({
+                spreadsheet: { id, name }
+            })),
+            subscribe("uiEvents.closeSpreadsheet", () => this.setState({
+                spreadsheet: null
+            }))
+        ];
     }
 
     componentWillUnmount () {
-        unsubscribe(this.subscription);
+        this.subscriptions.map(sub => unsubscribe(sub));
     }
 
     render () {

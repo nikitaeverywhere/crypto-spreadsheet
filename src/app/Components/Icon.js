@@ -4,7 +4,9 @@ import "./Icon.scss";
 export default class Icon extends Component {
 
     render () {
-        return <div class={ `icon ${ this.props.size || "normal" } icon-${ this.props.image }` }/>;
+        const { image, size, clickable, ...props } = this.props;
+        return <div class={ `icon ${ size || "normal" } icon-${ image }${ clickable ? " clickable" : "" }` }
+                    { ...props }/>;
     }
 
 }

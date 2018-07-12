@@ -4,6 +4,8 @@ import { getSheet } from "../../modules/googleSheetsApi.js";
 import Sheet from "./Sheet/Sheet.js";
 import Icon from "../Components/Icon.js";
 import EncryptionControl from "../Components/EncryptionControl.js";
+import autobind from "autobind-decorator";
+import { publish } from "pubsub-js";
 
 export default class Spreadsheet extends Component {
 
@@ -22,9 +24,16 @@ export default class Spreadsheet extends Component {
         });
     }
 
+    @autobind
+    onBackClick () {
+        console.log(1);
+        publish("uiEvents.closeSpreadsheet");
+    }
+
     render () {
         return <div class="spreadsheet">
             <div class="header">
+                <Icon size="big" image="back" clickable onClick={ this.onBackClick }/>
                 <Icon size="big" image="lock"/>
                 { this.props.name }
                 <EncryptionControl/>

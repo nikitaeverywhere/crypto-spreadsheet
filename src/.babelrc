@@ -13,6 +13,7 @@
     "plugins": [
         "transform-class-properties",
         "syntax-dynamic-import",
-        "transform-decorators-legacy"
+        "transform-decorators-legacy",
+        "transform-object-rest-spread"
     ]
 }
