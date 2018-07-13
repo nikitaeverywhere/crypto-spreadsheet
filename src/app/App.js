@@ -27,7 +27,7 @@ export default class App extends Component {
 
     render () {
         return this.state.spreadsheet
-            ? <Spreadsheet id={ this.state.spreadsheet.id } name={ this.state.spreadsheet.name }/>
+            ? <Spreadsheet id={ this.state.spreadsheet.id }/>
             : <SpreadsheetSelect/>;
     }
 
