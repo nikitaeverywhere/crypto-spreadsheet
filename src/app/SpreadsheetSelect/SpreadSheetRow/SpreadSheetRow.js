@@ -7,8 +7,8 @@ export default class SpreadsheetSelect extends Component {
 
     @autobind
     onClick () {
-        const { name, id } = this.props;
-        publish("uiEvents.openSpreadsheet", { name, id });
+        const { id, name } = this.props;
+        publish("uiEvents.openSpreadsheet", { id, name });
     }
 
     render () {
