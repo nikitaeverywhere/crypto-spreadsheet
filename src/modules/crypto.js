@@ -38,7 +38,7 @@ export function encrypt (text, salt = []) {
 export function decrypt (text, salt = []) {
     let decrypted;
     if (key === "") {
-        return text;
+        return text.indexOf("U2FsdGVkX1") === 0 ? "Wrong password!" : text;
     }
     try {
         decrypted = ciphers[cipher].decrypt(text, key);
