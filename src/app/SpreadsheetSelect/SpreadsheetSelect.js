@@ -27,7 +27,7 @@ export default class SpreadsheetSelect extends Component {
                 <h2 class="title">Select the Spreadsheet You Want to Interact With</h2>
                 <div class="subtext">
                     If you want to create a new spreadsheet, go
-                    to <a href="https://docs.google.com/spreadsheets/">Google Spreadsheets</a> and
+                    to <a href="https://docs.google.com/spreadsheets/" target="_blank">Google Spreadsheets</a> and
                     create one, then come back to crypto-spreadsheet.
                 </div>
             </div>

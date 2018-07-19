@@ -1,5 +1,6 @@
 const { resolve } = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const dest = "docs";
 
@@ -14,6 +15,10 @@ module.exports = {
             { from: "src/index.html", to: `index.html` }
         ], {
             force: true
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            openAnalyzer: false
         })
     ],
     module: {
