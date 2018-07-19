@@ -41,9 +41,8 @@ export default class Spreadsheet extends Component {
         return <div class="spreadsheet">
             <div class="header">
                 <Icon size="big" image="back" clickable onClick={ this.onBackClick }/>
-                <Icon size="big" image="lock"/>
-                { spreadsheet ? spreadsheet.properties.title : "Loading..." }
                 <EncryptionControl/>
+                <span class="title">{ spreadsheet ? spreadsheet.properties.title : "Loading..." }</span>
             </div>
             <div class="body">{ !spreadsheet ? null :
                 <Sheet sheet={ spreadsheet.sheets[this.state.selectedSheet] }

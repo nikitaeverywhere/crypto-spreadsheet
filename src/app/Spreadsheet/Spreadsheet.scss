@@ -15,10 +15,24 @@ $footerHeight: 1.5rem;
     }
 
     > .header {
+        
         top: 0;
         height: $headerHeight;
         font-size: 120%;
         font-weight: bold;
+
+        > * {
+            vertical-align: top;
+        }
+
+        > .encryption-control {
+            padding-top: .25rem;
+        }
+
+        > .title {
+            margin-left: .2rem;
+        }
+
     }
 
     > .body {
@@ -31,6 +45,7 @@ $footerHeight: 1.5rem;
 
         bottom: 0;
         height: $footerHeight;
+        overflow: hidden;
 
         .tab {
 
@@ -42,6 +57,8 @@ $footerHeight: 1.5rem;
             border-radius: 0 0 .5rem .5rem;
             border: 1px solid gray;
             border-top: none;
+            line-height: 1;
+            vertical-align: top;
 
             &.selected {
                 background: white;

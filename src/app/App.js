@@ -4,7 +4,6 @@ import SpreadsheetSelect from "./SpreadsheetSelect/SpreadsheetSelect.js";
 import Spreadsheet from "./Spreadsheet/Spreadsheet.js";
 import { subscribe, unsubscribe } from "pubsub-js";
 import autobind from "autobind-decorator";
-import { APP_NAME } from "../constants.js";
 
 export default class App extends Component {
 
@@ -45,9 +44,11 @@ export default class App extends Component {
     }
 
     render () {
-        return this.state.spreadsheetId
-            ? <Spreadsheet id={ this.state.spreadsheetId }/>
-            : <SpreadsheetSelect/>;
+        return <div class={ `app-container ${ this.state.spreadsheetId ? "" : "centered" }` }>
+            { this.state.spreadsheetId
+                ? <Spreadsheet id={ this.state.spreadsheetId }/>
+                : <SpreadsheetSelect/> }
+        </div>
     }
 
 }

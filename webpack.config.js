@@ -1,4 +1,5 @@
 const { resolve } = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const dest = "docs";
 
@@ -8,6 +9,13 @@ module.exports = {
         path: resolve(dest),
         filename: "react-app.js"
     },
+    plugins: [
+        new CopyWebpackPlugin([
+            { from: "src/index.html", to: `index.html` }
+        ], {
+            force: true
+        })
+    ],
     module: {
         rules: [
             {
