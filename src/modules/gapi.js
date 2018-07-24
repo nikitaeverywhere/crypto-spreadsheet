@@ -64,7 +64,6 @@ async function init () {
 }
 
 async function updateSignInStatus (isSignedIn) {
-    console.log(`Signin status update: ${ isSignedIn }`);
     signedIn = isSignedIn;
 }
 

@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import "./App.scss";
 import SpreadsheetSelect from "./SpreadsheetSelect/SpreadsheetSelect.js";
 import Spreadsheet from "./Spreadsheet/Spreadsheet.js";
 import { subscribe, unsubscribe } from "pubsub-js";
 import autobind from "autobind-decorator";
+import "./App.scss";
+import "toaster-js/default.scss";
 
 export default class App extends Component {
 

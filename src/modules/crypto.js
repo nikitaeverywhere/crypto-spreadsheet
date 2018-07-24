@@ -27,7 +27,7 @@ function hash (string) {
 }
 
 export function encrypt (text, salt = []) {
-    if (key === "") {
+    if (key === "" || text === null) {
         return text;
     }
     return key === ""
@@ -37,6 +37,9 @@ export function encrypt (text, salt = []) {
 
 export function decrypt (text, salt = []) {
     let decrypted;
+    if (text === null) {
+        return text;
+    }
     if (key === "") {
         return text.indexOf("U2FsdGVkX1") === 0 ? "Wrong password!" : text;
     }

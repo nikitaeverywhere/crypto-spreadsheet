@@ -5,6 +5,8 @@ import SpreadsheetRow from "./SpreadSheetRow/SpreadSheetRow.js";
 
 export default class SpreadsheetSelect extends Component {
 
+    unmounted = false;
+
     state = {
         spreadsheetsList: []
     };
@@ -16,9 +18,13 @@ export default class SpreadsheetSelect extends Component {
 
     async init () {
         const list = await getSheetsList();
-        this.setState({
+        if (!this.unmounted) this.setState({
             spreadsheetsList: list
         });
+    }
+
+    componentWillUnmount () {
+        this.unmounted = true;
     }
 
     render () {
