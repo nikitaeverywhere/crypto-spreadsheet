@@ -10,7 +10,7 @@ import { subscribe, unsubscribe, publish } from "pubsub-js";
 export default class Spreadsheet extends Component {
 
     hotTable = null;
-    beforeRowsChangeData = null;
+    beforeChangesData = null;
 
     state = {
         dummy: 0
@@ -37,7 +37,6 @@ export default class Spreadsheet extends Component {
     }
 
     /**
-     * 
      * @param {number} rowIndex - Index of the starting row (when user inserts the first row, index is 1)
      * @param {number} _ - Number of rows inserted (positive) or deleted (negative) after the rowIndex
      * @param {string} trigger - Row change or delete
@@ -45,11 +44,11 @@ export default class Spreadsheet extends Component {
     @autobind
     async onAfterRowsChange (rowIndex, _, trigger) {
         const data = this.hotTable.getData();
-        const lastRow = Math.max(data.length, this.beforeRowsChangeData.length);
+        const lastRow = Math.max(data.length, this.beforeChangesData.length);
         const changes = [];
         for (let y = rowIndex; y < lastRow; ++y) {
             const curRow = data[y] || [];
-            const pastRow = this.beforeRowsChangeData[y] || [];
+            const pastRow = this.beforeChangesData[y] || [];
             const lastCol = Math.max(curRow.length, pastRow.length);
             for (let x = 0; x < lastCol; ++x) {
                 if (curRow[x] === pastRow[x] || !(curRow[x] || pastRow[x])) { // !(null || undefined)
@@ -70,12 +69,52 @@ export default class Spreadsheet extends Component {
 
     @autobind
     onBeforeRowsChange () {
-        this.beforeRowsChangeData = this.hotTable.getData();
+        this.beforeChangesData = this.hotTable.getData();
     }
 
     @autobind
     onBeforeRowsDelete (rowIndex, changed) {
         this.onBeforeRowsChange(rowIndex, -changed);
+    }
+
+    /**
+     * @param {number} colIndex - Index of the starting col (when user inserts the first col, index is 1)
+     * @param {number} _ - Number of cols inserted (positive) or deleted (negative) after the rowIndex
+     * @param {string} trigger - Col change or delete
+     */
+    @autobind
+    async onAfterColsChange (colIndex, _, trigger) {
+        const data = this.hotTable.getData();
+        const changes = [];
+        for (let y = 0; y < data.length; ++y) {
+            const curRow = data[y] || [];
+            const pastRow = this.beforeChangesData[y] || [];
+            const lastCol = Math.max(curRow.length, pastRow.length);
+            for (let x = colIndex; x < lastCol; ++x) {
+                if (curRow[x] === pastRow[x] || !(curRow[x] || pastRow[x])) { // !(null || undefined)
+                    continue;
+                }
+                changes.push([y, x, pastRow[x] || "", curRow[x] || ""]);
+            }
+        }
+        if (changes.length) {
+            await this.onAfterChange(changes, trigger);
+        }
+    }
+
+    @autobind
+    async onAfterColsDelete (colIndex, changed, trigger) {
+        this.onAfterColsChange(colIndex, -changed, trigger);
+    }
+
+    @autobind
+    onBeforeColsChange () {
+        this.beforeChangesData = this.hotTable.getData();
+    }
+
+    @autobind
+    onBeforeColsDelete (colIndex, changed) {
+        this.onBeforeColsChange(colIndex, -changed);
     }
 
     getEncryptionSalt (row, col) {
@@ -117,7 +156,11 @@ export default class Spreadsheet extends Component {
                          afterCreateRow={ this.onAfterRowsChange }
                          afterRemoveRow={ this.onAfterRowsDelete }
                          beforeCreateRow={ this.onBeforeRowsChange }
-                         beforeRemoveRow={ this.onBeforeRowsDelete }/>
+                         beforeRemoveRow={ this.onBeforeRowsDelete }
+                         afterCreateCol={ this.onAfterColsChange }
+                         afterRemoveCol={ this.onAfterColsDelete }
+                         beforeCreateCol={ this.onBeforeColsChange }
+                         beforeRemoveCol={ this.onBeforeColsDelete }/>
 
     }
 
