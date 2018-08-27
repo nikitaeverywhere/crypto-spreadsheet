@@ -14,7 +14,6 @@ async function initialization () {
 }
 
 async function loadApi () {
-    await import("./api.js");
     gapi.load("client:auth2", init);
 }
 
