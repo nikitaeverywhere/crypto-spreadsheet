@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./SpreadsheetSelect.scss";
 import { getSheetsList } from "../../modules/googleSheetsApi.js";
 import SpreadsheetRow from "./SpreadSheetRow/SpreadSheetRow.js";
+import { signOut } from "../../modules/gapi";
 
 export default class SpreadsheetSelect extends Component {
 
@@ -32,9 +33,12 @@ export default class SpreadsheetSelect extends Component {
             <div class="head">
                 <h2 class="title">Select the Spreadsheet You Want to Interact With</h2>
                 <div class="subtext">
-                    If you want to create a new spreadsheet, go
-                    to <a href="https://docs.google.com/spreadsheets/" target="_blank">Google Spreadsheets</a> and
-                    create one, then come back to crypto-spreadsheet.
+                    <input class="float-right" type="button" value="Sign Out" onClick={ signOut }/>
+                    <div>
+                        If you want to create a new spreadsheet, go
+                        to <a href="https://docs.google.com/spreadsheets/" target="_blank">Google Spreadsheets</a> and
+                        create one, then come back to crypto-spreadsheet.
+                    </div>
                 </div>
             </div>
         { !this.state.spreadsheetsList

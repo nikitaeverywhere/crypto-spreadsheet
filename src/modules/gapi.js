@@ -80,3 +80,8 @@ export async function signIn () {
         await delay(50);
     }
 }
+
+export async function signOut () {
+    localStorage.removeItem("gapiToken");
+    location.reload();
+}
