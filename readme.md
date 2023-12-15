@@ -1,10 +1,10 @@
 # Crypto Spreadsheet
 
-Client-encrypted Google Spreadsheets! Visit [https://zitros.github.io/crypto-spreadsheet/](https://zitros.github.io/crypto-spreadsheet/).
+Client-encrypted Google Spreadsheets! Visit [https://nikitaeverywhere.github.io/crypto-spreadsheet/](https://nikitaeverywhere.github.io/crypto-spreadsheet/).
 
 ## Usage
 
-1. Bookmark [https://zitros.github.io/crypto-spreadsheet/](https://zitros.github.io/crypto-spreadsheet/). Anyway, you can always download a client and run it on `localhost:80` or `localhost:5000`.
+1. Bookmark [https://nikitaeverywhere.github.io/crypto-spreadsheet](https://nikitaeverywhere.github.io/crypto-spreadsheet). Anyway, you can always download a client and run it on `localhost:80` or `localhost:5000`.
 2. Make sure there's no malicious browser extensions/other software installed that can intercept the passwords you type.
 3. Log in with Google and open any recently created spreadsheet.
 4. Type a password to the top input.
@@ -15,4 +15,4 @@ Warning: cypher is subject to change on the very early development stages.
 
 # License
 
-[MIT](LICENSE) | [Nikita Savchenko](https://nikita.tk)
+[MIT](LICENSE) | [Nikita Savchenko](https://nikitaeverywhere.com)
